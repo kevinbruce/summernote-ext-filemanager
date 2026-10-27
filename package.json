@@ -1,0 +1,39 @@
+{
+  "name": "summernote-ext-filemanager",
+  "version": "0.1.0",
+  "description": "A file library for Summernote: browse files already on your server, upload more, and insert them as images or links.",
+  "keywords": ["summernote", "summernote-plugin", "wysiwyg", "file-manager", "media-library", "image-picker"],
+  "license": "MIT",
+  "author": "Kevin Bruce",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinbruce/summernote-ext-filemanager.git"
+  },
+  "homepage": "https://github.com/kevinbruce/summernote-ext-filemanager#readme",
+  "bugs": "https://github.com/kevinbruce/summernote-ext-filemanager/issues",
+  "main": "src/summernote-ext-filemanager.js",
+  "style": "src/summernote-ext-filemanager.css",
+  "files": [
+    "src",
+    "examples/php/FileLibrary.php",
+    "examples/php/filemanager.php",
+    "README.md",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "jquery": ">=3.0.0",
+    "summernote": ">=0.8.18"
+  },
+  "devDependencies": {
+    "jquery": "^3.7.1",
+    "jsdom": "^24.1.0",
+    "summernote": "0.9.1",
+    "vitest": "^1.6.0"
+  },
+  "scripts": {
+    "test": "vitest run && php test/php/FileLibraryTest.php",
+    "test:js": "vitest run",
+    "test:php": "php test/php/FileLibraryTest.php",
+    "demo": "php -S localhost:8080"
+  }
+}

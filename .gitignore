@@ -1,0 +1,4 @@
+node_modules/
+examples/php/uploads/
+.DS_Store
+*.log

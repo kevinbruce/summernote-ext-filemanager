@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>summernote-ext-filemanager demo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.9.1/dist/summernote-lite.min.css"
+        integrity="sha384-ujmZ40iFsxEHUq6QCcxwjfGi1W9lk9SkvB4Kz6ZCDGh5G1LF41x7qOfDJnBo82CS" crossorigin="anonymous">
+  <link rel="stylesheet" href="../src/summernote-ext-filemanager.css">
+  <style>
+    body { max-width: 900px; margin: 32px auto; padding: 0 16px; font: 16px/1.5 system-ui, sans-serif; color: #1d2733; }
+    code { background: #f1f3f5; padding: 1px 5px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <h1>summernote-ext-filemanager</h1>
+  <p>Run <code>npm run demo</code> (PHP's built-in server) and open
+     <code>http://localhost:8080/examples/</code>. Use the folder button in the
+     toolbar: upload a picture or two, then pick one to insert it.</p>
+
+  <div id="editor"><p>Put the cursor here, then open the file library.</p></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"
+          integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.1/dist/summernote-lite.min.js"
+          integrity="sha384-PIcWJ29rkVSUGtsk8A9iQDkUN50LgPkoQkzKDBEgwZsyiCnqx/L7Y3JHT+aeKw86" crossorigin="anonymous"></script>
+  <script src="../src/summernote-ext-filemanager.js"></script>
+  <script>
+    $('#editor').summernote({
+      height: 260,
+      toolbar: [
+        ['style', ['style', 'bold', 'italic']],
+        ['insert', ['link', 'filemanager']],
+        ['view', ['codeview']]
+      ],
+      filemanager: {
+        url: 'php/filemanager.php'
+      }
+    });
+  </script>
+</body>
+</html>

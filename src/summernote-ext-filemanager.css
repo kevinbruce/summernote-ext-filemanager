@@ -1,0 +1,257 @@
+/*
+ * summernote-ext-filemanager: the dialog and its grid.
+ *
+ * Every name is note-filemanager- prefixed and nothing here relies on a
+ * framework's classes, so the dialog looks the same with Summernote lite,
+ * bs3, bs4 or bs5 and is safe from whatever a page does to .card or .badge.
+ * Colors are custom properties; override them on .note-filemanager-dialog.
+ */
+
+.note-filemanager-dialog {
+  --note-fm-accent: #0d6efd;
+  --note-fm-accent-soft: rgba(13, 110, 253, .25);
+  --note-fm-border: #dee2e6;
+  --note-fm-muted: #5c636a;
+  --note-fm-text: #212529;
+  --note-fm-tile: #f8f9fa;
+  --note-fm-bg: #fff;
+  --note-fm-error: #b02a37;
+}
+
+/* Wide enough for several columns of thumbnails; a browsing tool at a
+   default 500px dialog reads as a list. */
+.note-filemanager-dialog .modal-dialog,
+.note-filemanager-dialog .note-modal-content {
+  max-width: 1100px;
+  width: 96vw;
+}
+
+/* The dialog is the drop target: the veil needs a positioning context. */
+.note-filemanager-dialog .modal-content,
+.note-filemanager-dialog .note-modal-content {
+  position: relative;
+}
+
+.note-filemanager-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.note-filemanager-bar .note-filemanager-search {
+  flex: 1 1 200px;
+  min-width: 0;
+  width: auto;
+}
+
+.note-filemanager-bar .note-filemanager-search::placeholder {
+  color: var(--note-fm-muted);
+  opacity: 1;
+}
+
+.note-filemanager-bar .note-filemanager-filter {
+  flex: 0 0 130px;
+  width: auto;
+}
+
+.note-filemanager-upload {
+  flex: 0 0 auto;
+}
+
+.note-filemanager-status {
+  min-height: 1.4em;
+  font-size: 13px;
+  color: var(--note-fm-muted);
+}
+
+/* A fixed height: the dialog does not jump as results change. */
+.note-filemanager-results {
+  height: min(460px, 60vh);
+  overflow: auto;
+  border: 1px solid var(--note-fm-border);
+  border-radius: 4px;
+  padding: 10px;
+  background: var(--note-fm-bg);
+}
+
+.note-filemanager-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.note-filemanager-item {
+  margin: 0;
+  padding: 0;
+}
+
+.note-filemanager-pick {
+  display: block;
+  width: 100%;
+  padding: 6px;
+  border: 1px solid var(--note-fm-border);
+  border-radius: 4px;
+  background: var(--note-fm-bg);
+  color: var(--note-fm-text);
+  cursor: pointer;
+  text-align: center;
+  font: inherit;
+}
+
+.note-filemanager-pick:hover,
+.note-filemanager-pick:focus-visible {
+  border-color: var(--note-fm-accent);
+  box-shadow: 0 0 0 2px var(--note-fm-accent-soft);
+  outline: none;
+}
+
+.note-filemanager-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90px;
+  margin-bottom: 6px;
+  background: var(--note-fm-tile);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.note-filemanager-thumb img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  /* A faint checkerboard behind the picture, as image editors draw it: a
+     white logo on a transparent background is otherwise invisible here. */
+  background: repeating-conic-gradient(#e9ecef 0 25%, #fff 0 50%) 0 0 / 12px 12px;
+}
+
+.note-filemanager-ext {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--note-fm-muted);
+}
+
+/* A file the list named but the server could not serve: the image removes
+   itself and the tile says so, rather than showing a broken picture. */
+.note-filemanager-missing::after {
+  content: "×";
+  font-size: 32px;
+  line-height: 1;
+  color: var(--note-fm-muted);
+}
+
+.note-filemanager-missing ~ .note-filemanager-name {
+  text-decoration: line-through;
+  color: var(--note-fm-muted);
+}
+
+/* Long names are the norm; two lines, then an ellipsis. */
+.note-filemanager-name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.note-filemanager-size {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--note-fm-muted);
+}
+
+.note-filemanager-empty {
+  margin: 24px 0;
+  text-align: center;
+  color: var(--note-fm-muted);
+}
+
+.note-filemanager-error {
+  color: var(--note-fm-error);
+}
+
+.note-filemanager-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--note-fm-muted);
+}
+
+.note-filemanager-pager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.note-filemanager-page {
+  min-width: 2.2em;
+  padding: 3px 9px;
+  border: 1px solid var(--note-fm-border);
+  border-radius: 4px;
+  background: var(--note-fm-bg);
+  color: var(--note-fm-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.note-filemanager-page[aria-current="page"] {
+  border-color: var(--note-fm-accent);
+  background: var(--note-fm-accent);
+  color: #fff;
+}
+
+.note-filemanager-page:disabled:not([aria-current]) {
+  opacity: .45;
+  cursor: default;
+}
+
+/* Covers the whole dialog during a drag: a drop on the toolbar or the
+   padding is still a drop somebody meant. */
+.note-filemanager-veil {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  align-items: center;
+  justify-content: center;
+  border: 3px dashed var(--note-fm-accent);
+  border-radius: 6px;
+  background: rgba(13, 110, 253, .08);
+  color: var(--note-fm-accent);
+  font-size: 1.2em;
+  font-weight: 600;
+  pointer-events: none; /* or it takes the drop it is advertising */
+}
+
+.note-filemanager-dragging .note-filemanager-veil {
+  display: flex;
+}
+
+/* The toolbar button's own icon. */
+.note-filemanager-icon {
+  vertical-align: -.125em;
+}
+
+@media (max-width: 576px) {
+  .note-filemanager-grid {
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  }
+
+  .note-filemanager-thumb {
+    height: 72px;
+  }
+}
