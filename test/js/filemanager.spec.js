@@ -106,6 +106,17 @@ describe('listing', () => {
     expect(req.headers).toEqual({ 'X-CSRF-Token': 't0k' });
   });
 
+  it('tells a params function which request it is for', async () => {
+    const params = vi.fn((kind) => ({ route: kind }));
+    ajax.mockImplementation((req) => answer(req.type === 'POST' && req.processData === false ? { file: { url: '/u/a.png' } } : LIST));
+    const { plugin } = editor({ params: params });
+    await plugin.show();
+    expect(ajax.mock.calls[0][0].data.route).toBe('list');
+    await plugin.upload([new File(['x'], 'a.png')]);
+    const up = ajax.mock.calls.find((c) => c[0].processData === false)[0];
+    expect(up.data.get('route')).toBe('upload');
+  });
+
   it('can ask by POST, and open on all files', async () => {
     const { plugin } = editor({ method: 'post', filter: 'all' });
     await plugin.show();

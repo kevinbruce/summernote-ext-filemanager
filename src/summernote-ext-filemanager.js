@@ -71,8 +71,8 @@
     url: null,           // the endpoint: GET lists, POST uploads
     uploadUrl: null,     // where uploads go, if not url
     method: 'GET',       // how the list is asked for
-    params: {},          // sent with every request (object, or a function returning one)
-    headers: {},         // sent with every request, e.g. a CSRF token (object or function)
+    params: {},          // sent with every request: an object, or function (kind) where kind is 'list' or 'upload'
+    headers: {},         // sent with every request, e.g. a CSRF token: an object, or function (kind)
     upload: true,        // offer uploading
     filter: 'images',    // the filter the dialog opens on: 'images' or 'all'
     list: null,          // function (criteria) -> Promise<{files, page, pages, total}>, instead of url
@@ -88,8 +88,8 @@
     });
   }
 
-  function value(v) {
-    return typeof v === 'function' ? v() : v;
+  function value(v, kind) {
+    return typeof v === 'function' ? v(kind) : v;
   }
 
   /** The name without its extension, dashes and underscores as spaces. */
@@ -308,13 +308,14 @@
 
       /** A request to the endpoint, with the site's params and headers. */
       this.ajax = function (url, type, data, isUpload) {
-        var extra = value(settings.params) || {};
+        var kind = isUpload ? 'upload' : 'list';
+        var extra = value(settings.params, kind) || {};
         var req = {
           url: url,
           type: type,
           dataType: 'json',
           cache: false,
-          headers: value(settings.headers) || {}
+          headers: value(settings.headers, kind) || {}
         };
         if (isUpload) {
           $.each(extra, function (k, v) { data.append(k, v); });

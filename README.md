@@ -49,8 +49,8 @@ All under `filemanager` in Summernote's options.
 | `url` | `null` | The endpoint. `GET` lists files, `POST` uploads one. |
 | `uploadUrl` | `url` | Where uploads go, if somewhere else. |
 | `method` | `'GET'` | How the list is asked for (`'POST'` for a framework that routes on POST). |
-| `params` | `{}` | Extra fields sent with every request. An object, or a function returning one. |
-| `headers` | `{}` | Extra headers sent with every request, e.g. a CSRF token. An object or a function. |
+| `params` | `{}` | Extra fields sent with every request. An object, or `function (kind)` returning one, where `kind` is `'list'` or `'upload'`. |
+| `headers` | `{}` | Extra headers sent with every request, e.g. a CSRF token. An object, or `function (kind)` as for `params`. |
 | `upload` | `true` | Offer uploading (the button and drag-and-drop). |
 | `filter` | `'images'` | What the dialog opens on: `'images'` or `'all'`. |
 | `list` | `null` | `function (criteria)` returning a promise of a list, instead of `url`. |
@@ -65,6 +65,16 @@ A CSRF token, for example:
 filemanager: {
   url: '/files',
   headers: () => ({ 'X-CSRF-Token': document.querySelector('meta[name=csrf-token]').content })
+}
+```
+
+A framework that routes on a posted field, with one endpoint for both:
+
+```js
+filemanager: {
+  url: '/',
+  method: 'POST',
+  params: (kind) => ({ action: kind === 'upload' ? 'files.upload' : 'files.list' })
 }
 ```
 
