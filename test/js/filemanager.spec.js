@@ -162,6 +162,17 @@ describe('listing', () => {
     expect(dialog().find('.note-filemanager-error').text()).toBe('Could not load files (500).');
   });
 
+  it('shows the reason a server gives for refusing', async () => {
+    ajax.mockImplementation(() => answer({ error: 'You need to be signed in.' }));
+    const { plugin } = editor();
+    await plugin.show();
+    expect(dialog().find('.note-filemanager-error').text()).toBe('You need to be signed in.');
+
+    ajax.mockImplementation(() => failure(403, { error: 'Forbidden here.' }));
+    await plugin.load(1).catch(() => {});
+    expect(dialog().find('.note-filemanager-error').text()).toBe('Forbidden here.');
+  });
+
   it('pages, with the current page marked', async () => {
     ajax.mockImplementation((req) => answer({ files: LIST.files, page: req.data.page, pages: 9, total: 300 }));
     const { plugin } = editor();

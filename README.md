@@ -101,6 +101,9 @@ Plus anything in `params`. Answer with JSON:
 }
 ```
 
+To refuse (not signed in, say), answer `{ "error": "Why." }` with any status;
+the dialog shows the message.
+
 Only `url` is required for a file. `name` defaults to the last part of the URL,
 `isImage` is guessed from the extension, `thumb` defaults to the image itself,
 and `size` (bytes) is shown when given. `page`, `pages` and `total` drive the
@@ -115,7 +118,8 @@ the file somebody just uploaded is the one they are looking for.
 (the dialog's state) and anything in `params`. One file per request: the
 dialog sends a batch one at a time, so one refused file does not stop the rest.
 
-Answer `2xx` with `{ "file": { … } }` on success, or `{ "error": "Why it was refused." }`,
+Answer `2xx` with `{ "file": { … } }` on success (any answer without `error`
+counts as one; the dialog reloads its list either way), or `{ "error": "Why it was refused." }`,
 either with a `4xx` status or `2xx`. The message is shown to the person
 uploading, next to the file's name.
 

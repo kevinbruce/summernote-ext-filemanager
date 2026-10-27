@@ -359,17 +359,23 @@
           if (mine !== request || !self.$dialog) {
             return;
           }
+          self.status('');
+          // A server may refuse with a reason ("Sign in first"): show it.
+          if (data && data.error) {
+            $results.empty().append($('<p class="note-filemanager-empty note-filemanager-error">').text(String(data.error)));
+            return;
+          }
           var list = normalizeList(data, criteria.page);
           state.page = list.page;
-          self.status('');
           $results.empty().append(self.render(list, criteria));
         }, function (xhr) {
           if (mine !== request || !self.$dialog) {
             return;
           }
           self.status('');
+          var why = xhr && xhr.responseJSON && xhr.responseJSON.error;
           $results.empty().append($('<p class="note-filemanager-empty note-filemanager-error">')
-            .text(format(lang.loadFailed, { status: (xhr && xhr.status) || '?' })));
+            .text(why ? String(why) : format(lang.loadFailed, { status: (xhr && xhr.status) || '?' })));
         });
       };
 
