@@ -209,6 +209,11 @@ Every class is `note-filemanager-` prefixed. Colors are custom properties on
 npm test         # vitest (jsdom) for the plugin, plain php for the backend
 ```
 
+## Related
+
+- [summernote-ext-imagealt](https://github.com/kevinbruce/summernote-ext-imagealt): alt text for images, so a file picked here can be described.
+- [summernote-ext-tableprops](https://github.com/kevinbruce/summernote-ext-tableprops): table, row and cell properties.
+
 ## License
 
 MIT © Kevin Bruce. Built for, and released with the permission of, Maryland Sea Grant.

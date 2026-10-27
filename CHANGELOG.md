@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## 0.1.0 (2026-10-27)
 
 First release: browse, search, filter and page a server's files from a
 Summernote toolbar button; upload by button or drag-and-drop, one file at a
